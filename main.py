@@ -1,3 +1,5 @@
+from scanner import Scanner
+from parser import Parser
 import sys
 
 def leArquivo(nome):

@@ -1,3 +1,4 @@
+from enum import Enum
 class BNFType(Enum):
   PROGRAMA = 1
   DECLARACAO_LISTA = 2
