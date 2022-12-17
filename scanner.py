@@ -1,5 +1,7 @@
 from string import ascii_letters as letters
 from constants import *
+from errorMessage import ErrorMessage
+from token_1 import *
 
 class Scanner:
   def __init__(self, scanned_file):

@@ -1,4 +1,8 @@
 from sys import exit
+from constants import *
+from node import *
+from bnfType import *
+
 
 SEQUENCIA_DECLARACAO = [Constants.PONTO_VIRGULA, Constants.ID, Constants.PARENTESE_ABRE, Constants.NUM]
 SEQUENCIA_STATEMENT = [Constants.PONTO_VIRGULA, Constants.ID, Constants.PARENTESE_ABRE, Constants.NUM, 
