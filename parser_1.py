@@ -53,13 +53,14 @@ class Parser:
     return token.value in self.ids_declarados
   
   def programa(self):
-    print()
+    print(f"{self.token_atual} programa")
     no = Node(None, BNFType.PROGRAMA)
     no.add(self.declaracaoLista())
     
     return no
 
   def declaracaoLista(self):
+    print(f"{self.token_atual} declaracaoLista")
     no = Node(None, BNFType.DECLARACAO_LISTA)
     no.add(self.declaracao())
     
@@ -72,6 +73,7 @@ class Parser:
     return no
 
   def declaracao(self):
+    print(f"{self.token_atual} declaracao")
     no = Node(self.tokens[self.token_index+1], self.token_atual.token_type)
     self.validaToken(Constants.INT, Constants.VOID)
     no_id = Node(self.tokens[self.token_index+1], Constants.ID)
@@ -88,6 +90,7 @@ class Parser:
     return no
 
   def varDeclaracao(self, no):
+    print(f"{self.token_atual} varDeclaracao")
     if self.token_atual.token_type == Constants.COLCHETE_ABRE:
       self.validaToken(Constants.COLCHETE_ABRE)
       self.validaToken(Constants.NUM)
@@ -99,11 +102,13 @@ class Parser:
     return no
 
   def tipoEspecificador(self):
+    print(f"{self.token_atual} tipoEspecificador")
     no = Node(self.token_atual, BNFType.TIPO_ESPECIFICADOR)
     self.validaToken(self.token_atual.token_type)
     return no
 
   def funDeclaracao(self, no):
+    print(f"{self.token_atual} funDeclaracao")
     self.validaToken(Constants.PARENTESE_ABRE)
     no_aux = self.params()
 
@@ -117,6 +122,7 @@ class Parser:
     return no
 
   def params(self):
+    print(f"{self.token_atual} params")
     no = Node(None, BNFType.PARAMS)
     
     if self.token_atual.token_type == Constants.VOID:
@@ -127,6 +133,7 @@ class Parser:
     return no
 
   def paramLista(self):
+    print(f"{self.token_atual} paramLista")
     no = self.param()
     params = []
     params.append(no)
@@ -139,6 +146,7 @@ class Parser:
     return params
 
   def param(self):
+    print(f"{self.token_atual} param")
     no = Node()
     no.add(self.tipoEspecificador())
 
@@ -155,6 +163,7 @@ class Parser:
     return no
 
   def compostoDecl(self):
+    print(f"{self.token_atual} compostoDecl")
     no = Node(None, BNFType.COMPOSTO_DECL)
     self.validaToken(Constants.CHAVE_ABRE)
     no.filhos += self.localDeclaracoes()
@@ -164,6 +173,7 @@ class Parser:
     return no
 
   def localDeclaracoes(self):
+    print(f"{self.token_atual} localDeclaracoes")
     delclaracoes = []
 
     while self.token_atual.token_type == Constants.INT or self.token_atual.token_type == Constants.VOID:
@@ -188,6 +198,7 @@ class Parser:
     return delclaracoes
 
   def statementLista(self):
+    print(f"{self.token_atual} statementLista")
     statements = []
     while (self.token_atual.token_type in SEQUENCIA_STATEMENT):
       statements.append(self.statement())
@@ -195,6 +206,7 @@ class Parser:
     return statements
 
   def statement(self):
+    print(f"{self.token_atual} statement")
     if self.token_atual.token_type == Constants.RETURN:
       return self.retornoDecl()
     elif self.token_atual.token_type == Constants.CHAVE_ABRE:
@@ -207,6 +219,7 @@ class Parser:
       return self.expressaoDecl()
 
   def expressaoDecl(self):
+    print(f"{self.token_atual} expressaoDecl")
     no = Node(None, BNFType.EXPRESSAO_DECL)
     
     if (self.token_atual.token_type in SEQUENCIA_DECLARACAO):
@@ -216,6 +229,7 @@ class Parser:
     return no
 
   def selecaoDecl(self):
+    print(f"{self.token_atual} selecaoDecl")
     no = Node(None, BNFType.SELECAO_DECL)
     self.validaToken(Constants.IF)
     self.validaToken(Constants.PARENTESE_ABRE)
@@ -230,6 +244,7 @@ class Parser:
     return no
 
   def iteracaoDecl(self):
+    print(f"{self.token_atual} iteracaoDecl")
     no = Node(None, BNFType.ITERACAO_DECL)
     self.validaToken(Constants.WHILE)
     self.validaToken(Constants.PARENTESE_ABRE)
@@ -240,6 +255,7 @@ class Parser:
     return no
 
   def retornoDecl(self):
+    print(f"{self.token_atual} retornoDecl")
     no = Node(None, BNFType.RETORNO_DECL)
     self.validaToken(Constants.RETURN)
     
@@ -250,6 +266,7 @@ class Parser:
     return no
 
   def expressao(self):
+    print(f"{self.token_atual} expressao")
     no = Node(None, BNFType.EXPRESSAO)
     no_aux = no
 
@@ -278,12 +295,14 @@ class Parser:
     return no
 
   def var(self, no):
+    print(f"{self.token_atual} var")
     if self.token_atual.token_type == Constants.COLCHETE_ABRE:
       self.validaToken(Constants.COLCHETE_ABRE)
       no.add(self.expressao())
       self.validaToken(Constants.COLCHETE_FECHA)
 
   def simplesExpressao(self):
+    print(f"{self.token_atual} simplesExpressao")
     no = Node(None, BNFType.SIMPLES_EXPRESSAO)
     no.add(self.somaExpressao())
 
@@ -294,12 +313,14 @@ class Parser:
     return no
 
   def relacional(self):
+    print(f"{self.token_atual} relacional")
     no = Node(self.token_atual, BNFType.RELACIONAL)
     self.validaToken(self.token_atual.token_type)
 
     return no
 
   def somaExpressao(self):
+    print(f"{self.token_atual} somaExpressao")
     no = Node(None, BNFType.SOMA_EXPRESSAO)
     no.add(self.termo())
     
@@ -310,12 +331,14 @@ class Parser:
     return no
 
   def soma(self):
+    print(f"{self.token_atual} soma")
     no = Node(self.token_atual, BNFType.SOMA)
     self.validaToken(self.token_atual.token_type)
 
     return no
 
   def termo(self):
+    print(f"{self.token_atual} termo")
     no = Node(None, BNFType.TERMO)
     no.add(self.fator())
 
@@ -326,12 +349,14 @@ class Parser:
     return no 
 
   def mult(self):
+    print(f"{self.token_atual} mult")
     no = Node(self.token_atual, BNFType.MULT)
     self.validaToken(self.token_atual.token_type)
 
     return no
 
   def fator(self):
+    print(f"{self.token_atual} fator")
     no = Node(None, BNFType.FATOR)
     
     if self.token_atual.token_type == Constants.ID:
@@ -356,11 +381,13 @@ class Parser:
     return no
 
   def ativacao(self, no):
+    print(f"{self.token_atual} ativacao")
     self.validaToken(Constants.PARENTESE_ABRE)
     no.add(self.args())
     self.validaToken(Constants.PARENTESE_FECHA)
 
   def args(self):
+    print(f"{self.token_atual} args")
     no = Node(None, BNFType.ARGS)
     no.add(self.expressao())
     

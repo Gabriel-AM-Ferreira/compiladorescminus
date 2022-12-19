@@ -1,0 +1,146 @@
+programa → declaração-lista
+declaração-lista → declaração declaração-lista’
+declaração-lista’ → declaração declaração-lista’
+declaração-lista’ → ε
+declaração → var-declaração
+declaração → fun-declaração
+var-declaração → tipo-especificador ID ;
+var-declaração → tipo-especificador ID [ NUM ] ; 
+tipo-especificador → int 
+tipo-especificador → void 
+fun-declaração → tipo-especificador ID ( params ) composto-decl
+params → param-lista
+params → void
+param-lista → param param-lista’
+param-lista’ → param , param-lista’
+param-lista’ → ε
+param → tipo-especificador ID
+param → tipo-especificador [ ID ]
+composto-decl → { local-declarações statement-lista }
+local-declarações → var-declaração local-declarações’  
+local-declarações’ → var-declaração local-declarações’
+local-declarações’ → ε 
+statement-lista → statement statement-lista’ 
+statement-lista’ → statement statement-lista’
+statement-lista’ → ε 
+statement → expressão-decl
+statement → composto-decl
+statement → seleção-decl
+statement → iteração-decl
+statement → retorno-decl
+expressão-decl → expressão ;
+expressão-decl → ; 
+seleção-decl →  if ( expressão ) statement
+seleção-decl → if ( expressão ) statement else statement
+iteração-decl → while ( expressão ) statement
+retorno-decl → return ;
+retorno-decl → return expressão ;
+expressão → var = expressão
+expressão → simples-expressão ; 
+var → ID
+var → ID [ expressão ]
+simples-expressão → soma-expressão relacional soma-expressão
+simples-expressão → soma-expressão
+relacional → <= 
+relacional → < 
+relacional → > 
+relacional → >= 
+relacional → == 
+relacional → !=
+soma-expressão → termo soma-expressão’ 	
+soma-expressão’ →  soma termo soma-expressão’
+soma-expressão’ → ε
+soma → + 
+soma → -
+termo → fator termo’
+termo’ → mult fator termo’
+termo’ → ε
+mult → * 
+mult → /
+fator → ( expressão )
+fator → var
+fator → ativação 
+fator → NUM
+ativação → ID ( args )	
+args → arg-lista
+args → ε
+arg-lista → expressão arg-lista’  
+arg-lista’ → ,expressão arg-lista’
+arg-lista’ → ε
+
+Primeiro(programa) = {int, void}
+Primeiro(declaração-lista) = {int, void}
+Primeiro(declaração-lista') = {int, void, ε}
+Primeiro(declaração) = {int, void}
+Primeiro(var-declaração) = {int, void}
+Primeiro(tipo-especificador) = {int, void}
+Primeiro(fun-declaração) = {int, void}
+Primeiro(params) = {int, void}
+Primeiro(param-lista) = {int, void}
+Primeiro(param-lista') = {int, void, ε}
+Primeiro(param) = {int, void}
+Primeiro(composto-decl) = {{}
+Primeiro(local-declarações) = {int, void}
+Primeiro(local-declarações') = {int, void, ε}
+Primeiro(statement-lista) = {;, ID, (, NUM, {, if, while, return}
+Primeiro(statement-lista') = {;, ID, (, NUM, {, if, while, return, ε}
+Primeiro(statement) = {;, ID, (, NUM, {, if, while, return}
+Primeiro(expressão-decl) = {;, ID, (, NUM}
+Primeiro(seleção-decl) = {if}
+Primeiro(iteração-decl) = {while}
+Primeiro(retorno-decl) = {return}
+Primeiro(expressão) = {ID, (, NUM}
+Primeiro(var) = {ID}
+Primeiro(simples-expressão) = {ID, (, NUM}
+Primeiro(relacional) = {<=, <, >, >=, ==, !=}
+Primeiro(soma-expressão) = {ID, (, NUM}
+Primeiro(soma-expressão') = {+, -, ε}
+Primeiro(soma) = {+, -}
+Primeiro(termo) = {ID, (, NUM}
+Primeiro(termo') = {*, /, ε}
+Primeiro(mult) = {*, /}
+Primeiro(fator) = {ID, (, NUM}
+Primeiro(ativação) = {ID}
+Primeiro(args) = {ID, (, NUM, ε}
+Primeiro(arg-lista) = {ID, (, NUM}
+Primeiro(arg-lista') = {,, ε}
+
+
+
+Sequência(programa) = {$}
+Sequência(declaração-lista) = {$}
+Sequência(declaração-lista') = {$}
+Sequência(declaração) = {int, void, $}
+Sequência(var-declaração) = {int, void, $}
+Sequência(tipo-especificador) = {ID, [}
+Sequência(fun-declaração) = {int, void, $}
+Sequência(params) = {)}
+Sequência(param-lista) = {)}
+Sequência(param-lista') = {)}
+Sequência(param) = {,, ), int, void}
+Sequência(composto-decl) = {int, void, $, }}
+Sequência(local-declarações) = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(local-declarações') = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(statement-lista) = {}}
+Sequência(statement-lista') = {}}
+Sequência(statement) = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(expressão-decl) = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(seleção-decl) = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(iteração-decl) = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(retorno-decl) = {;, ID, (, NUM, {, if, while, return, }}
+Sequência(expressão) = {,, ;, ), }, ]}
+Sequência(var) = {=, +, -, *, /, <=, <, >, >=, ==, !=, ,, ;}
+Sequência(simples-expressão) = {;}
+Sequência(relacional) = {ID, (, NUM}
+Sequência(soma-expressão) = {<=, <, >, >=, ==, !=, ;}
+Sequência(soma-expressão') = {<=, <, >, >=, ==, !=, ;}
+Sequência(soma) = {ID, (, NUM}
+Sequência(termo) = {+, -, <=, <, >, >=, ==, !=, ;}
+Sequência(termo') = {+, -, <=, <, >, >=, ==, !=, ;}
+Sequência(mult) = {ID, (, NUM}
+Sequência(fator) = {*, /, +, -, <=, <, >, >=, ==, !=, ;}
+Sequência(ativação) = {*, /, +, -, <=, <, >, >=, ==, !=, ;}
+Sequência(args) = {)}
+Sequência(arg-lista) = {)}
+Sequência(arg-lista') = {)}
+

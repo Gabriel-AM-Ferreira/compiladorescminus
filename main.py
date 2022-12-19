@@ -12,7 +12,7 @@ def leArquivo(nome):
   except FileNotFoundError:
     raise FileNotFoundError('Arquivo não encontrado.')
 
-nome_arquivo = '/content/sort.txt'
+nome_arquivo = 'sort.txt'
 
 programa = leArquivo(nome_arquivo)
 tokens = Scanner(programa).scanAllTokens()
